@@ -2,7 +2,7 @@ import requests
 import re
 
 def regexedLinks(current):
-	return re.findall(r"https?\S+(?=\")", current)
+	return re.findall(r"(?<=href=\")https?\S+(?=\")", current)
 
 def uniqueEntries(currentItems, newItems):
 	if (len(newItems) == 0):
@@ -22,8 +22,8 @@ def getSource(start):
 
 
 def printList(pruned):
-	for item in pruned:
-		print(item + "\n")
+	for number in range(1, 101):
+		print(str(number) + ": " + pruned[number])
 
 
 def main(start):
