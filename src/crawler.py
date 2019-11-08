@@ -1,13 +1,15 @@
 import requests
 
-
 def regexedLinks(current):
 	pass
 
-
-def uniqueEntries(found):
-	pass
-
+def uniqueEntries(currentItems, newItems):
+	if (len(newItems) == 0):
+		return currentItems
+	for item in newItems:
+		if (item not in currentItems):
+			currentItems.append(item)
+	return currentItems
 
 def getSource(start):
 	page = requests.get(start)
@@ -26,7 +28,7 @@ def main(start):
 	while (len(pruned) < 100):
 		found = regexedLinks(current)
 		# uniqueEntries(xs) should consume `found` and empty list - adds unique entry to END of `pruned` list
-		pruned = uniqueEntries(found)
+		pruned = uniqueEntries(pruned, found)
 		if (len(pruned) == nextIndexToSearch):
 			print("No more sites left to search, terminating process.\n")
 			break
