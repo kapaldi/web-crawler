@@ -10,20 +10,29 @@ def unique_entries(current_items, new_items):
 	return current_items
 
 
-def clear_and_setup_file(name, start):
+def clear_and_setup_file(name, file_header=""):
 	file = open(name, "w")
 	file.truncate(0)
-	file.write("Error report for starting URL: " + start + "\n----------\n\n")
+	if (file_header != ""):
+		file.write(file_header)
 	file.close()
 
-def print_list(pruned, links):
+
+def display_and_write(file, item):
+	file.write(item + "\n")
+	print(item)
+
+
+def print_list(pruned, links, file_out):
+	clear_and_setup_file(file_out)
+	file = open(file_out, "w")
 	if (len(pruned) > 1):
 		print_range = min(len(pruned), links + 1)
-		print("There were " + str(print_range - 1) + " links found. Below are the links found after crawling:\n")
+		display_and_write(file, "There were " + str(print_range - 1) + " links found. Below are the links found after crawling:\n")
 		for number in range(1, print_range):
-			print(str(number) + ": " + pruned[number])
+			display_and_write(file, str(number) + ": " + pruned[number])
 	else:
-		print("nothing has been found...")
+		display_and_write(file, "nothing has been found...")
 
 
 def setup():
