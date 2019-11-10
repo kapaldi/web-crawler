@@ -1,6 +1,6 @@
-from utilities import *
-from crawlerUtilities import *
 from File import create_files
+from utils.utilities import *
+from utils.crawlerUtilities import *
 
 errorFileName = "../out/crawler-errors.txt"
 output_file_name = "../out/crawler-output.txt"

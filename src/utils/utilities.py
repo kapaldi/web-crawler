@@ -1,5 +1,6 @@
 import os
 
+from constants import *
 
 def unique_entries(current_items, new_items):
 	if (len(new_items) == 0):
@@ -20,9 +21,9 @@ def print_list(pruned, links, files):
 		print_range = min(len(pruned), links + 1)
 		print("There were " + str(print_range - 1) + " links found. Below are the links found after crawling:\n")
 		for number in range(1, print_range):
-			display_and_write(files[1].file, str(number) + ": " + pruned[number])
+			display_and_write(files[output_file_index].file, str(number) + ": " + pruned[number])
 	else:
-		display_and_write(files[1].file, "nothing has been found...")
+		display_and_write(files[output_file_index].file, "nothing has been found...")
 
 
 def setup():
