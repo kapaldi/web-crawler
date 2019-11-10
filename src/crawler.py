@@ -1,17 +1,16 @@
 from utilities import *
 from crawlerUtilities import *
+from File import create_files
 
-errorFileWritten = False
 errorFileName = "../out/crawler-errors.txt"
 output_file_name = "../out/crawler-output.txt"
 
 
 def crawler(start, links):
-	global errorFileWritten
+	error_file_written = False
 
-	file_header = "Error report for crawler.\nStarting URL: " + start + "\n----------\n\n"
-	clear_and_setup_file(errorFileName, file_header)
-	current, errorFileWritten = get_source(start, errorFileName, errorFileWritten)
+	files = create_files(start, errorFileName, output_file_name)
+	current, error_file_written = get_source(start, files, error_file_written)
 	# Added current site into list of pruned links to avoid cyclic cases arising from first link re-linking to itself
 	pruned = [start]
 	next_index_to_search = 1
@@ -30,7 +29,7 @@ def crawler(start, links):
 			# short-circuit out in cases where no extra links `found` and current list of links exhausted
 			print("No more sites left to search, terminating process.\n")
 			break
-		current, errorFileWritten = get_source(pruned[next_index_to_search], errorFileName, errorFileWritten)
+		current, error_file_written = get_source(pruned[next_index_to_search], files, error_file_written)
 		next_index_to_search += 1
 
 		'''
@@ -38,16 +37,17 @@ def crawler(start, links):
 		ASSERT(UNIQUE(PRUNE))	
 		'''
 
-	if (errorFileWritten):
-		print("Some issues were found during crawling. Check \"../out/crawler-errors.txt\" for more details.")
+	if (error_file_written):
+		print("-> Some issues were found during crawling. Check \"../out/crawler-errors.txt\" for more details.")
 	print("-> Check \"../out/crawler-output.txt\" for a copy of the crawled output.\n")
-	print_list(pruned, links, output_file_name)
+	print_list(pruned, links, files)
+	close_files(files)
 	return pruned
 
 
 def main():
 	number, start = setup()
-	print("\nWill be crawling starting from " + start + " for " + str(number) + " links.\n\n")
+	print("Will be crawling starting from " + start + " for " + str(number) + " links.\n\n")
 	crawler(start, number)
 
 
