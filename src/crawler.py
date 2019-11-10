@@ -3,12 +3,14 @@ from crawlerUtilities import *
 
 errorFileWritten = False
 errorFileName = "../out/crawler-errors.txt"
+output_file_name = "../out/crawler-output.txt"
 
 
 def crawler(start, links):
 	global errorFileWritten
 
-	clear_and_setup_file(errorFileName, start)
+	file_header = "Error report for crawler.\nStarting URL: " + start + "\n----------\n\n"
+	clear_and_setup_file(errorFileName, file_header)
 	current, errorFileWritten = get_source(start, errorFileName, errorFileWritten)
 	# Added current site into list of pruned links to avoid cyclic cases arising from first link re-linking to itself
 	pruned = [start]
@@ -37,14 +39,15 @@ def crawler(start, links):
 		'''
 
 	if (errorFileWritten):
-		print("Some issues were found during crawling. Check \"../out/crawler-errors.txt\" for more details.\n")
-	print_list(pruned, links)
+		print("Some issues were found during crawling. Check \"../out/crawler-errors.txt\" for more details.")
+	print("-> Check \"../out/crawler-output.txt\" for a copy of the crawled output.\n")
+	print_list(pruned, links, output_file_name)
 	return pruned
 
 
 def main():
 	number, start = setup()
-	print("Will be crawling starting from " + start + " for " + str(number) + " links.\n\n")
+	print("\nWill be crawling starting from " + start + " for " + str(number) + " links.\n\n")
 	crawler(start, number)
 
 

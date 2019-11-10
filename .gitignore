@@ -1,4 +1,6 @@
+# Ignoring crawler output files.
 /out/crawler-errors.txt
+/out/crawler-output.txt
 
-# Don't ignore /out/
+# Don't ignore /out directory.
 !/out/.keep
