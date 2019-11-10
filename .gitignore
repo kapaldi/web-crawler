@@ -1,0 +1,4 @@
+/out/crawler-errors.txt
+
+# Don't ignore /out/
+!/out/.keep
