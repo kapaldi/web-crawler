@@ -1,5 +1,9 @@
+import os
 import requests
 import re
+
+errorFileWritten = False
+errorFileName = "../out/crawler-errors.txt"
 
 def regexedLinks(current):
 	return re.findall(r"(?<=href=\")https?\S+(?=\")", current)
@@ -12,24 +16,53 @@ def uniqueEntries(currentItems, newItems):
 			currentItems.append(item)
 	return currentItems
 
+
+def clearAndSetupFile(name, start):
+	file = open(name, "w")
+	file.truncate(0)
+	file.write("Error report for starting URL: " + start + "\n----------\n\n")
+	file.close()
+
+
+def writeError(error_code, start):
+	file = open(errorFileName, "a")
+	file.write("ERROR " + str(error_code) + " was reported for url: " + start + "\n")
+	file.close()
+
 def getSource(start):
-	page = requests.get(start)
+	global errorFileName
+	global errorFileWritten
+
+	page = attemptRetrival(start)
 	if (page.status_code > 400):
-		print("ERROR " + str(page.status_code) + " was reported for url: " + start)
+		errorFileWritten = True
+		writeError(str(page.status_code,), start)
 		return []
 	else:
 		return page.text
 
 
+def attemptRetrival(link):
+	try:
+		return requests.get(link)
+	except requests.exceptions.RequestException as e:
+		print(e)
+		exit(1)
+
+
 def printList(pruned, links):
 	if (len(pruned) > 1):
 		printRange = min(len(pruned), links + 1)
+		print("There were " + str(printRange - 1) + " links found. Below are the links found after crawling:\n")
 		for number in range(1, printRange):
 			print(str(number) + ": " + pruned[number])
 	else:
-		print("nothing has been found...\n")
+		print("nothing has been found...")
 
-def main(start, links):
+def crawler(start, links):
+	global errorFileWritten
+
+	clearAndSetupFile(errorFileName, start)
 	current = getSource(start)
 	# Added current site into list of pruned links to avoid cyclic cases arising from first link re-linking to itself
 	pruned = [start]
@@ -56,7 +89,32 @@ def main(start, links):
 		ASSERT(LEN(FOUND) == 0)
 		ASSERT(UNIQUE(PRUNE))	
 		'''
+
+	if (errorFileWritten):
+		print("Some issues were found during crawling. Check \"../out/crawler-errors.txt\" for more details.\n")
 	printList(pruned, links)
 	return pruned
 
-main("https://news.ycombinator.com", 100)
+
+def main():
+	number, start = setup()
+	print("Will be crawling starting from " + start + " for " + str(number) + " links.\n\n")
+	crawler(start, number)
+
+
+def setup():
+	start = input("Enter starting URL: ")
+	validNumber = False
+	while (not validNumber):
+		try:
+			number = int(input("Enter the number of links to be found: "))
+			validNumber = True
+		except ValueError:
+			print("Please re-enter a valid integer for the amount of links to be found.\n")
+	clearCommand = 'cls' if os.name == 'nt' else 'clear'
+	os.system(clearCommand)
+	return number, start
+
+
+if __name__ == '__main__':
+	main()
