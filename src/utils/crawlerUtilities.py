@@ -2,16 +2,16 @@ import re
 import requests
 
 from File import close_files
-from constants import *
+from lib.constants import *
 
 
-def regex_links(current):
-	return re.findall(r"(?<=href=\")https?\S+(?=\")", current)
+def regex_links(links):
+	return re.findall(r"(?<=<a href=\")https?\S+(?=\")", links)
 
 
 def get_source(url, files, error_file_written):
 	page = attempt_retrieval(url, files)
-	if (page.status_code > 400):
+	if (page.status_code >= html_error_code_starting_point):
 		error_file_written = True
 		write_error(files[error_file_index].file, str(page.status_code), url)
 		return [], error_file_written
