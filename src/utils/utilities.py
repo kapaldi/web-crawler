@@ -1,6 +1,7 @@
 import os
 
-from constants import *
+from lib.constants import *
+
 
 def unique_entries(current_items, new_items):
 	if (len(new_items) == 0):
