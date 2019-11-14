@@ -392,5 +392,20 @@ _"Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content"_.
 
 ### Error Output Report: `src/out/crawler-errors.txt`
 
+This file reports upon any errors found in the crawling execution.
+
+Errors are defined as response codes greater than
+that of `html_error_code_starting_point`.
+
+Setup is completed when the file is created or cleaned up in the `create_Files` method in `src/File.py`.
+
+This file is written to by the `write_error` method in `src/utils/crawlerUtilities.py`.
+
 ### Crawler Output Copy: `src/out/crawler-output.txt`
+
+This file stores a copy of the output of the crawler, as displayed in the console.
+
+Setup is completed when the file is created or cleaned up in the `create_files` method in `src/File.py`.
+
+This file is written to by the `display_and_write` method in `src/utils/utilities.py`.
 
