@@ -33,9 +33,16 @@ def setup():
 	while (not valid_number):
 		try:
 			number = int(input("Enter the number of links to be found: "))
-			valid_number = True
+			if (number >= 0):
+				valid_number = True
+			else:
+				print("Please re-enter a valid positive number.\n")
 		except ValueError:
 			print("Please re-enter a valid integer for the amount of links to be found.\n")
+	clear_console()
+	return number, start
+
+
+def clear_console():
 	clear_command = 'cls' if os.name == 'nt' else 'clear'
 	os.system(clear_command)
-	return number, start

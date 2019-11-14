@@ -15,7 +15,13 @@ def create_files(start, error_file_name, output_file_name):
 
 def close_files(files):
 	for index in range(0, len(files)):
-		files[index].file.close()
+		try:
+			files[index].file.close()
+		except IOError:
+			print("File was not closed successfully. Terminating program. (IOError from closing file at index " + str(
+				index) + ").")
+			exit(1)
+	return True
 
 
 def clear_and_setup_file(file, file_header=""):
