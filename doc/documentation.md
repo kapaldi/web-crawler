@@ -16,6 +16,27 @@ and `out/crawler-errors.txt`.
 ^ A URL is well-formed and a "valid URL string" if it follows syntax standardised in the "Internet Standard".
 (https://tools.ietf.org/html/rfc3986) 
 
+## Uniqueness (A note on uniqueness)
+
+**Uniqueness is based upon "string uniqueness". Even though the URL points to the same page, _currently_ they are still
+considered unique ("string unique").**
+
+    http://www.example.com
+    https://www.example.com
+    http://example.com
+    https://example.com
+
+The links above, although are different only on whether they utilise the `www` prefix in the domain name and the
+secure https protocol or the standard http protocol, are considered unique.
+
+**Uniqueness is page unique and not domain unique.**
+
+    https://www.example.com/path/to/a
+    https://www.example.com/path/to/b
+    
+The links above are considered unique as they point to different places, as they have different paths, even if they are
+part of the same domain.    
+
 ## Documentation
 
 ### Crawler Functionality: `src/crawler.py`
