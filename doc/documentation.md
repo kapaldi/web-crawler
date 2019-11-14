@@ -2,15 +2,16 @@
 
 Given a `URL` that is well-formed^ and a number of `links`, the crawler returns the links that could be scraped
 from the given starting URL. The amount of links returned is either the specified amount or all the links that could be
-reached from every single link in the start source page if there is less than the specified amount.
+reached from every single link in the start source page, and every subsequent page, if there is less than the specified
+amount.
 
 If there are any malformation of links, the crawler will suggest a more complete URL formation that the user could have
 meant to type in. If there are any invalid numbers specified for the amount of links to crawl for, the program will
 detect and inform the user to re-enter the amount again.
 
 In addition to the displaying the results to the console, the crawler will generate a copy of the results (if any) and
-an error report as a result of each crawl. The output and error report can be found at `out/crawler-output.txt` and
-`out/crawler-errors.txt`.
+an error report (if any) as a result of each crawl. The output and error report can be found at `out/crawler-output.txt`
+and `out/crawler-errors.txt`.
 
 ^ A URL is well-formed and a "valid URL string" if it follows syntax standardised in the "Internet Standard".
 (https://tools.ietf.org/html/rfc3986) 
@@ -166,7 +167,7 @@ message, otherwise `True` is returned to indicate that all files have been close
 
 The method will clear the file, via truncation to size 0, and write the header specified at the top.
 
-### Utility Functions: `src/utils/utilities`
+### Utility Functions: `src/utils/utilities.py`
 
 - `unique_entries(current_items, new_items)`
 
@@ -278,7 +279,7 @@ None.
 The method will pattern match any URLs in the source in an "<a href=..." tag and return a list containing a list of all
 matched URL.
 
-NB1:This method utilises the library "re" which is part of the Python Standard Library.
+NB1: This method utilises the library "re" which is part of the Python Standard Library.
 (https://docs.python.org/3/library/re.html)
 
 NB2: This methods utilises the _non-standard_ library "requests" that must be installed in the environment that this
