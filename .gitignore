@@ -4,3 +4,7 @@
 
 # Don't ignore /out directory.
 !/out/.keep
+
+# Ignoring pre-compiled files
+__pycache__/
+.DS_STORE
