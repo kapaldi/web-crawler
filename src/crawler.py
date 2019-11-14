@@ -14,7 +14,6 @@ def crawler(start, links):
 	pruned = [start]
 	next_index_to_search = 1
 	while (len(pruned) < links + 1):
-		# Catches case for where `getSource` html receives an error from provided url
 		if (current != ""):
 			found = regex_links(current)
 			pruned = unique_entries(pruned, found)
