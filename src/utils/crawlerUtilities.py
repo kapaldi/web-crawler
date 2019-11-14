@@ -5,8 +5,8 @@ from File import close_files
 from lib.constants import *
 
 
-def regex_links(links):
-	return re.findall(r"(?<=<a href=\")https?\S+(?=\")", links)
+def regex_links(source):
+	return re.findall(r"(?<=<a href=\")https?\S+(?=\")", source)
 
 
 def get_source(url, files, error_file_written):
@@ -14,7 +14,7 @@ def get_source(url, files, error_file_written):
 	if (page.status_code >= html_error_code_starting_point):
 		error_file_written = True
 		write_error(files[error_file_index].file, str(page.status_code), url)
-		return [], error_file_written
+		return "", error_file_written
 	else:
 		return page.text, error_file_written
 
