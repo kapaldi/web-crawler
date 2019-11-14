@@ -369,6 +369,27 @@ caught and displayed. Then any open `files` is closed and the execution is termi
 
 ### Constants: `src/lib/constants.py`
 
+#### File Indexes
+
+These are the indexes that the error and output file will be stored at after they are both created in the `create_file`
+method in the `src/File.py` class that will be called upon in the main `crawler` method in `src/crawler.py`
+
+- `error_file_index = 0`
+
+The error file will be defined to be stored at index 0.
+
+- `output_file_index = 1`
+
+The output file will be defined to be stored at index 1.
+
+#### Other Constants
+
+- `html_error_code_starting_point = 400`
+
+The boundary for which the HTML error codes start, as specified in section 6 of the 
+_"Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content"_.
+(https://tools.ietf.org/html/rfc7231)
+
 ### Error Output Report: `src/out/crawler-errors.txt`
 
 ### Crawler Output Copy: `src/out/crawler-output.txt`
